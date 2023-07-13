@@ -4,12 +4,14 @@ import Card from '../Card/Card'
 import { useEffect, useState } from 'react'
 
 const Table = (props) => {
-    const {emojis, columns} = props
+    const { emojis, columns } = props
 
     const [table, setTable] = useState([])
     const [moveIsValid, setMoveIsValid] = useState(true)
     const [cardSelect, setCardSelect] = useState([])
     const [rightPairs, setRightPairs] = useState(0)
+    const [moves, setMoves] = useState(0)
+    const [endGame, setEndGame] = useState(false)
 
     let emojisTable = emojis
 
@@ -46,15 +48,16 @@ const Table = (props) => {
                     setCardSelect([])
                 }, 1200)
             }
+            setMoves(moves + 1)
         }
     }
 
     const wrongPair = (id1, id2) => {
         const newState = table.map(card => {
             if (card.emoji == id1) {
-                return {...card, open: false }
+                return { ...card, open: false }
             } else if (card.emoji == id2) {
-                return {...card, open: false }
+                return { ...card, open: false }
             } else {
                 return card
             }
@@ -68,9 +71,9 @@ const Table = (props) => {
     const rightPair = (id1, id2) => {
         const newState = table.map(card => {
             if (card.emoji == id1) {
-                return {...card, checked: true }
+                return { ...card, checked: true }
             } else if (card.emoji == id2) {
-                return {...card, checked: true }
+                return { ...card, checked: true }
             } else {
                 return card
             }
@@ -81,6 +84,16 @@ const Table = (props) => {
         setTable(newState)
         setRightPairs(rightPairs + 2)
     }
+
+    const winGame = () => {
+        if (rightPairs == Math.pow(columns, 2)) {
+            setEndGame(true)
+        }
+    }
+
+    useEffect(() => {
+        winGame()
+    }, [rightPairs])
 
     const chooseCard = (id) => {
         const newState = table.map(card => {
@@ -105,7 +118,7 @@ const Table = (props) => {
 
     useEffect(() => {
         checkCards()
-        if(cardSelect.length >= 2) {
+        if (cardSelect.length >= 2) {
             setMoveIsValid(false)
         } else {
             setMoveIsValid(true)
@@ -119,14 +132,16 @@ const Table = (props) => {
                 {table && table.map((item, index) => (
                     <S.ButtonCard onClick={() => {
                         isTableLengthValid(index)
-                        // chooseCard(index)
-                        // cardSelect.length < 2 && setTable(prevState => ({...prevState, table}) )
                     }} key={index}>
                         <Card item={item} />
                     </S.ButtonCard>
                 ))}
+            {!!endGame && 
+                <S.Modal>
+                    <h1>PARABENS</h1>
+                    <p>Você completou o desafio com <strong>{moves}</strong> movimentos</p>
+                </S.Modal>}
             </S.Content>
-
         </S.Container>
     )
 }

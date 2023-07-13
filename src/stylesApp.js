@@ -9,6 +9,7 @@ export const Container = styled.div `
     padding: 24px 16px;
     text-align: center;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    position: relative;
 `
 
 export const Title = styled.h1`
@@ -49,3 +50,4 @@ export const Button = styled.button`
         transition: all ease 200ms;
     }
 `
+
