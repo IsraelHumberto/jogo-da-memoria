@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  bottom: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  background-color: var(--yellow);
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 12px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+:root {
+  --yellow: #F8c304;
+  --purple: #6c117b;
+  --navy-blue: #340763;
+  --light-blue: #0182b0;
+  --blue: #04558a;
+  --pink: #FF329d;
+}
